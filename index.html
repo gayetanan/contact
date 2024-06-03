@@ -22,9 +22,14 @@
               <i class='bx bx-search'></i>
               <input type="text" name="search" id="search" placeholder="search contact" class="">
             </div>
-            <button type="button" class="bg-purple-700 px-4 rounded-se-md">
+            <button type="button" data-target="category-list" class="filter-trigger bg-purple-700 px-4 rounded-se-md">
               filter
             </button>
+
+            <ul id="category-list"
+              class="hidden absolute right-0 w-full aria-expanded:block max-w-40 top-12 bg-white p-2 border-gray-900/10 border-[1px] rounded-md">
+              <li data-category="family" class="cursor-pointer">Family</li>
+            </ul>
 
           </form>
 
@@ -121,6 +126,9 @@
           <button>Next</button>
         </div>
       </div>
+    </div>
+    <div>
+
     </div>
   </section>
   <script type="module" src="/src/main.ts"></script>
