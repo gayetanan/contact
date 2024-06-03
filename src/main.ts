@@ -1,6 +1,7 @@
 import "./css/style.css";
 const filterButton = document.querySelector(".filter-trigger") as HTMLButtonElement;
 const categotyListButton = document.querySelectorAll("#category-list li") as NodeList;
+const ulContact = <HTMLUListElement>document.querySelector(".contacts")
 
 
 const toggleFilterList = function (e: Event): void {
@@ -19,11 +20,23 @@ const toggleFilterList = function (e: Event): void {
 categotyListButton.forEach((button: Node) => {
     button.addEventListener("click", (e: Event) => {
         const element = <HTMLLIElement>e.target;
+        element.parentElement?.setAttribute("aria-expanded", "false")
         console.log(element.dataset.category)
 
     })
 })
 
-
+ulContact.addEventListener("click", (e) => {
+    const trigger = <HTMLElement>e.target;
+    const test: HTMLElement | null = document.querySelector("#test");
+    // case the element that clicked it button
+    if (trigger.tagName === "BUTTON") {
+        const triggerDetails = trigger.getBoundingClientRect();
+        if (test) {
+            test.style.top = `${triggerDetails.height + 10}px`
+            test.style.right = `0px`
+        }
+    }
+});
 
 filterButton?.addEventListener("click", toggleFilterList);

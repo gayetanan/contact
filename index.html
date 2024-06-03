@@ -22,13 +22,17 @@
               <i class='bx bx-search'></i>
               <input type="text" name="search" id="search" placeholder="search contact" class="">
             </div>
-            <button type="button" data-target="category-list" class="filter-trigger bg-purple-700 px-4 rounded-se-md">
-              filter
+            <button type="button" data-target="category-list"
+              class="filter-trigger bg-purple-700 px-4 rounded-se-md inline-flex items-center">
+              <i class='pointer-events-none bx bx-filter text-2xl text-white'></i>
             </button>
 
             <ul id="category-list"
               class="hidden absolute right-0 w-full aria-expanded:block max-w-40 top-12 bg-white p-2 border-gray-900/10 border-[1px] rounded-md">
-              <li data-category="family" class="cursor-pointer">Family</li>
+              <li data-category="all" class="cursor-pointer text-sm">All</li>
+              <li data-category="family" class="cursor-pointer text-sm">Family</li>
+              <li data-category="family-mate" class="cursor-pointer text-sm">Team Mate</li>
+              <li data-category="family-mate" class="cursor-pointer text-sm"></li>
             </ul>
 
           </form>
@@ -38,86 +42,27 @@
             <button class="c-btn">import</button>
           </div>
 
-          <ul class="contact px-2 mt-6 grid gap-4">
-            <li class="flex justify-between items-center">
+          <ul class="contacts px-2 mt-6 grid gap-4">
+            <li class="flex justify-between items-center relative">
               <div class="flex items-center gap-4">
                 <div class="w-10 rounded-full overflow-hidden">
                   <img src="https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250">
                 </div>
-                <div>
+                <div class="grid gap-[2px]">
                   <span class="text-base font-bold">Gayetan.an</span>
+                  <span aria-family
+                    class="w-fit text-[10px] py-[2px] px-2 aria-[family]:bg-yellow-300 rounded-md">Family</span>
                 </div>
               </div>
               <div>
-                <button type="button">
+                <button type="button" class="bg-gray-200 inline-flex p-1 rounded-full">
                   <i class='bx bx-dots-vertical-rounded'></i>
                 </button>
               </div>
+
+              <div id="test" class="absolute bg-red-300">test</div>
             </li>
 
-            <li class="flex justify-between items-center">
-              <div class="flex items-center gap-4">
-                <div class="w-10 rounded-full overflow-hidden">
-                  <img src="https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250">
-                </div>
-                <div>
-                  <span class="text-base font-bold">Gayetan.an</span>
-                </div>
-              </div>
-              <div>
-                <button type="button">
-                  <i class='bx bx-dots-vertical-rounded'></i>
-                </button>
-              </div>
-            </li>
-
-            <li class="flex justify-between items-center">
-              <div class="flex items-center gap-4">
-                <div class="w-10 rounded-full overflow-hidden">
-                  <img src="https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250">
-                </div>
-                <div>
-                  <span class="text-base font-bold">Gayetan.an</span>
-                </div>
-              </div>
-              <div>
-                <button type="button">
-                  <i class='bx bx-dots-vertical-rounded'></i>
-                </button>
-              </div>
-            </li>
-
-            <li class="flex justify-between items-center">
-              <div class="flex items-center gap-4">
-                <div class="w-10 rounded-full overflow-hidden">
-                  <img src="https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250">
-                </div>
-                <div>
-                  <span class="text-base font-bold">Gayetan.an</span>
-                </div>
-              </div>
-              <div>
-                <button type="button">
-                  <i class='bx bx-dots-vertical-rounded'></i>
-                </button>
-              </div>
-            </li>
-
-            <li class="flex justify-between items-center">
-              <div class="flex items-center gap-4">
-                <div class="w-10 rounded-full overflow-hidden">
-                  <img src="https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250">
-                </div>
-                <div>
-                  <span class="text-base font-bold">Gayetan.an</span>
-                </div>
-              </div>
-              <div>
-                <button type="button">
-                  <i class='bx bx-dots-vertical-rounded'></i>
-                </button>
-              </div>
-            </li>
           </ul>
 
         </div>
@@ -127,9 +72,7 @@
         </div>
       </div>
     </div>
-    <div>
 
-    </div>
   </section>
   <script type="module" src="/src/main.ts"></script>
 </body>

@@ -22,3 +22,7 @@ input:focus {
 .c-btn[aria-active="true"] {
     @apply bg-purple-400 text-black
 }
+
+button i {
+    @apply pointer-events-none
+}
