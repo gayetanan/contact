@@ -23,11 +23,10 @@ type ContactMenu = {
         right?: number
     },
     activeElement: {
-        readonly id: string | null,
+        id: string | null,
         element: HTMLElement | null
     }
 }
-
 
 const CONTACTS: Contact[] = datas
 
@@ -38,11 +37,11 @@ const contactMenu: ContactMenu = {
         element: null
     }
 }
-
+//Displaying contact to UI
 const addContactToUi = (contacts: Contact[]): void => {
     const contactList: Element = document.querySelector(".contacts")!;
 
-    const xxx = contacts.map((conatct) => {
+    const contactsData = contacts.map((conatct) => {
         return `
         <li class="flex justify-between items-center relative" data-id="${conatct.id}">
         <div class="flex items-center gap-4">
@@ -65,65 +64,50 @@ const addContactToUi = (contacts: Contact[]): void => {
         `
     })
 
-    contactList.innerHTML = xxx.join(" ")
-
+    contactList.innerHTML = contactsData.join(" ");
 }
+// Create contact Menu;
 const setContactMenu = (clickedContact: HTMLElement | null | undefined) => {
     const contactMenuClassList = "menu absolute z-50 bg-white text-sm p-1 grid justify-start gap-2 border-[1px] border-gray-900/10 rounded-md"
     const contactMenuElementCtn = document.createElement("div");
+
     contactMenuElementCtn.setAttribute("class", contactMenuClassList);
-    contactMenuElementCtn.innerHTML = `<button class="p-[2px]">Edit</button><button class="p-[2px] text-red-500 hover:text-red-700 rounded-sm">delete</button>`;
+    contactMenuElementCtn.innerHTML = `<button data-type="edit" class="p-[2px] bg-purple-700 hover:bg-purple-400 rounded-sm">Edit</button><button data-type="delete" class="text-red-500 hover:text-red-700">delete</button>`;
+
     contactMenuElementCtn.style.top = `${contactMenu.position.top + 12}px`;
     contactMenuElementCtn.style.right = `${contactMenu.position.right ?? 0}px`;
 
-
     if (clickedContact) {
-        clickedContact.appendChild(contactMenuElementCtn)
+        clickedContact.appendChild(contactMenuElementCtn);
+        contactMenuElementCtn.addEventListener("click", (e) => {
+            const button = e.target as HTMLElement;
+
+            if (button.dataset.type === "delete") {
+                contactMenu.activeElement.element?.remove();
+
+            };
+
+        })
     }
 }
-
+// Remove Contact Menu to UI
 const removeMenu = () => {
     const menu = <HTMLElement>document.querySelector(".menu");
     menu.remove();
 }
-
-// const toggleFilterList = function (e: Event): void {
-//     const button = e.target as HTMLElement;
-//     const id: string | undefined = button.dataset.target;
-
-//     const categotyList: HTMLElement | null = document.querySelector(`#${id}`);
-//     if (categotyList?.getAttribute("aria-expanded") === "true") {
-//         categotyList.setAttribute("aria-expanded", "false");
-//     }
-//     else {
-//         categotyList?.setAttribute("aria-expanded", "true");
-//     }
-// }
-
-// categotyListButton.forEach((button: Node) => {
-//     button.addEventListener("click", (e: Event) => {
-//         const element = <HTMLLIElement>e.target;
-//         element.parentElement?.setAttribute("aria-expanded", "false")
-//         console.log(element.dataset.category)
-
-//     })
-// })
-
-
-
-// filterButton?.addEventListener("click", toggleFilterList);
-
-
+// Toggle Contact Menu to UI
 const toggleConctactMenu = (contactUiElement: HTMLElement, top: number): void => {
     if (!contactMenu.activeElement?.element) {
         contactMenu.position = { top }
         contactMenu.activeElement.element = contactUiElement;
+        contactMenu.activeElement.id = contactUiElement.dataset.id!
         setContactMenu(contactUiElement);
         return;
 
     };
     if (contactMenu.activeElement?.element === contactUiElement) {
         contactMenu.activeElement.element = null;
+        contactMenu.activeElement.id = null
         removeMenu();
         return;
     };
@@ -131,6 +115,7 @@ const toggleConctactMenu = (contactUiElement: HTMLElement, top: number): void =>
         removeMenu();
         contactMenu.position = { top }
         contactMenu.activeElement.element = contactUiElement;
+        contactMenu.activeElement.id = contactUiElement.dataset.id!
         setContactMenu(contactUiElement);
         return;
     }
