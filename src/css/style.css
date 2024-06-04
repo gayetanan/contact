@@ -11,6 +11,46 @@ input:focus {
     @apply outline-none
 }
 
+.form-control input, .form-control select {
+    @apply w-full;
+}
+
+.form-control select {
+    background-color: transparent;
+}
+
+.add .form-control {
+    @apply border-gray-900/10 border-[1px]
+}
+
+.add .form-control:first-of-type {
+    @apply rounded-t-md
+}
+
+.button {
+    @apply rounded-md;
+}
+
+.button-primary {
+    @apply bg-purple-700
+}
+
+.button-full {
+    @apply w-full
+}
+
+.button-xl {
+    @apply p-2
+}
+
+.add .form-control:last-of-type {
+    @apply rounded-b-md
+}
+
+.add .form-control:not(:last-child) {
+    @apply border-b-[0]
+}
+
 .form-control i {
     @apply text-lg text-gray-400 pl-2;
 }
