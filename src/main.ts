@@ -1,6 +1,6 @@
 import "./css/style.css";
-const filterButton = document.querySelector(".filter-trigger") as HTMLButtonElement;
-const categotyListButton = document.querySelectorAll("#category-list li") as NodeList;
+// const filterButton = document.querySelector(".filter-trigger") as HTMLButtonElement;
+// const categotyListButton = document.querySelectorAll("#category-list li") as NodeList;
 const ulContact = <HTMLUListElement>document.querySelector(".contacts");
 import datas from "./data/datas.json";
 
@@ -40,7 +40,8 @@ const contactMenu: ContactMenu = {
 }
 
 const addContactToUi = (contacts: Contact[]): void => {
-    const contactList = <HTMLElement>document.querySelector(".contacts");
+    const contactList: Element = document.querySelector(".contacts")!;
+
     const xxx = contacts.map((conatct) => {
         return `
         <li class="flex justify-between items-center relative" data-id="${conatct.id}">
@@ -55,7 +56,7 @@ const addContactToUi = (contacts: Contact[]): void => {
           </div>
         </div>
         <div>
-          <button type="button" class="bg-gray-200 inline-flex p-1 rounded-full">
+          <button type="button" class="contact-menu bg-gray-200 inline-flex p-1 rounded-full">
             <i class='bx bx-dots-vertical-rounded'></i>
           </button>
         </div>
@@ -67,13 +68,11 @@ const addContactToUi = (contacts: Contact[]): void => {
     contactList.innerHTML = xxx.join(" ")
 
 }
-
-
-
 const setContactMenu = (clickedContact: HTMLElement | null | undefined) => {
+    const contactMenuClassList = "menu absolute z-50 bg-white text-sm p-1 grid justify-start gap-2 border-[1px] border-gray-900/10 rounded-md"
     const contactMenuElementCtn = document.createElement("div");
-    contactMenuElementCtn.setAttribute("class", "menu absolute bg-red-400")
-    contactMenuElementCtn.innerHTML = `<button>delete</button>`;
+    contactMenuElementCtn.setAttribute("class", contactMenuClassList);
+    contactMenuElementCtn.innerHTML = `<button class="p-[2px]">Edit</button><button class="p-[2px] text-red-500 hover:text-red-700 rounded-sm">delete</button>`;
     contactMenuElementCtn.style.top = `${contactMenu.position.top + 12}px`;
     contactMenuElementCtn.style.right = `${contactMenu.position.right ?? 0}px`;
 
@@ -142,7 +141,7 @@ ulContact.addEventListener("click", (e) => {
     const contact = <HTMLElement>trigger?.parentElement?.parentElement;
     const triggerDetails = trigger.getBoundingClientRect();
     // case the element that clicked it button
-    if (trigger.tagName === "BUTTON") {
+    if (trigger.tagName === "BUTTON" && trigger.classList.contains("contact-menu")) {
         toggleConctactMenu(contact, triggerDetails.height)
     }
 
