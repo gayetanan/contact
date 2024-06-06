@@ -36,7 +36,7 @@
           </form>
 
           <div class="px-2 flex gap-2 mt-4">
-            <button aria-active="true" class="c-btn">Add</button>
+            <button aria-active="true" class="c-btn" data-target="#create-box">Add</button>
             <button class="c-btn">import</button>
           </div>
 
@@ -90,28 +90,35 @@
     </div>
   </section>
 
-  <div class="bg-[rgba(0,0,0,.08)] absolute inset-0 p-4 top flex items-center justify-center">
-    <form action="" class="bg-white rounded-md w-full max-w-xs p-4 relative z-50">
-      <div class="add">
-        <div class="form-control border-gray-900/10  p-2">
-          <input type="text" name="firstname" id="firstname" placeholder="Firstname">
+  <div aria-hidden="true" id="create-box"
+    class="aria-hidden:hidden bg-[rgba(0,0,0,.08)] absolute inset-0 p-4 top flex items-center justify-center">
+    <div class="relative">
+      <button data-target="#create-box"
+        class="cl-btn absolute bg-black p-1 inline-flex -top-2 -right-2 text-white rounded-full z-1">X</button>
+
+      <form action="create-box" class="bg-white rounded-md w-full max-w-xs p-6">
+        <div class="add">
+          <div class="form-control border-gray-900/10  p-2">
+            <input type="text" name="firstname" id="firstname" placeholder="Firstname">
+          </div>
+          <div class="form-control border-gray-900/10 p-2">
+            <input type="text" name="lastname" id="lastname" placeholder="Lastname">
+          </div>
+          <div class="form-control border-gray-900/10 p-2">
+            <input type="text" name="lastname" id="lastname" placeholder="phone">
+          </div>
+          <div class="form-control p-2">
+            <select name="" id="" class="block">
+              <option value="friend">Friend</option>
+              <option value="teammate">Teammate</option>
+              <option value="family">Family</option>
+            </select>
+          </div>
         </div>
-        <div class="form-control border-gray-900/10 p-2">
-          <input type="text" name="lastname" id="lastname" placeholder="Lastname">
-        </div>
-        <div class="form-control border-gray-900/10 p-2">
-          <input type="text" name="lastname" id="lastname" placeholder="phone">
-        </div>
-        <div class="form-control p-2">
-          <select name="" id="" class="block">
-            <option value="friend">Friend</option>
-            <option value="teammate">Teammate</option>
-            <option value="family">Family</option>
-          </select>
-        </div>
-      </div>
-      <button class="button-primary button-full button-xl button mt-4">Add Contact</button>
-    </form>
+        <button class="button-primary button-full button-xl button mt-4">Add Contact</button>
+      </form>
+    </div>
+
   </div>
   <script type="module" src="/src/main.ts"></script>
 </body>

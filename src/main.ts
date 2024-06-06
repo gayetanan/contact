@@ -1,10 +1,26 @@
 import "./css/style.css";
+const createButton = document.querySelector(".c-btn");
+const closeButton = document.querySelector(".cl-btn");
 // // const filterButton = document.querySelector(".filter-trigger") as HTMLButtonElement;
 // // const categotyListButton = document.querySelectorAll("#category-list li") as NodeList;
 // const ulContact = <HTMLUListElement>document.querySelector(".contacts");
 // const addButton = <HTMLButtonElement>document.querySelector(".add-btn");
 // import datas from "./data/datas.json";
 
+// Open BOX MODEL FOR CREATING Contact
+createButton?.addEventListener("click", (e) => {
+    const button = <HTMLElement>e.target;
+    const boxID = button.dataset.target!;
+    const boxModel = document.querySelector(boxID);
+    boxModel?.setAttribute("aria-hidden", "false");
+})
+
+closeButton?.addEventListener("click", (e) => {
+    const button = <HTMLElement>e.target;
+    const boxID = button.dataset.target!;
+    const boxModel = document.querySelector(boxID);
+    boxModel?.setAttribute("aria-hidden", "true");
+})
 
 // type Contact = {
 //     id: string,
@@ -18,12 +34,6 @@ import "./css/style.css";
 //         company?: string
 //     };
 // }
-
-
-
-
-
-
 
 // // type ContactMenu = {
 // //     position: {
