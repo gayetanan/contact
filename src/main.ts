@@ -8,18 +8,19 @@ const closeButton = document.querySelector(".cl-btn");
 // import datas from "./data/datas.json";
 
 // Open BOX MODEL FOR CREATING Contact
+const boxToggler = (state: string, trigger: HTMLElement) => {
+    const boxID = trigger.dataset.target!;
+    const boxModel = document.querySelector(boxID);
+    boxModel?.setAttribute("aria-hidden", state);
+}
 createButton?.addEventListener("click", (e) => {
     const button = <HTMLElement>e.target;
-    const boxID = button.dataset.target!;
-    const boxModel = document.querySelector(boxID);
-    boxModel?.setAttribute("aria-hidden", "false");
+
 })
 
 closeButton?.addEventListener("click", (e) => {
     const button = <HTMLElement>e.target;
-    const boxID = button.dataset.target!;
-    const boxModel = document.querySelector(boxID);
-    boxModel?.setAttribute("aria-hidden", "true");
+    boxToggler("false", button)
 })
 
 // type Contact = {
