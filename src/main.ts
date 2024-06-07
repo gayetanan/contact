@@ -1,27 +1,45 @@
 import "./css/style.css";
 const createButton = document.querySelector(".c-btn");
 const closeButton = document.querySelector(".cl-btn");
-// // const filterButton = document.querySelector(".filter-trigger") as HTMLButtonElement;
-// // const categotyListButton = document.querySelectorAll("#category-list li") as NodeList;
-// const ulContact = <HTMLUListElement>document.querySelector(".contacts");
-// const addButton = <HTMLButtonElement>document.querySelector(".add-btn");
-// import datas from "./data/datas.json";
-
+const contactForm = document.querySelector("#c-form");
 // Open BOX MODEL FOR CREATING Contact
-const boxToggler = (state: string, trigger: HTMLElement) => {
+const boxToggler = (state: string, trigger: HTMLElement): void => {
     const boxID = trigger.dataset.target!;
     const boxModel = document.querySelector(boxID);
     boxModel?.setAttribute("aria-hidden", state);
-}
+};
 createButton?.addEventListener("click", (e) => {
     const button = <HTMLElement>e.target;
-
-})
+    boxToggler("false", button)
+});
 
 closeButton?.addEventListener("click", (e) => {
     const button = <HTMLElement>e.target;
-    boxToggler("false", button)
+    boxToggler("true", button)
+});
+
+
+contactForm?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const form = <HTMLFormElement>e.target;
+    const fieldsCollection = form.elements;
+    // Ignoring case there is multiple input with the same name;
+    const firstname = fieldsCollection.namedItem("firstname") as HTMLInputElement;
+    const lastname = fieldsCollection.namedItem("lastname") as HTMLInputElement;
+    const phone = fieldsCollection.namedItem("phone") as HTMLInputElement;
+    const category = fieldsCollection.namedItem("category") as HTMLInputElement;
+    //
+    const phonePattern = RegExp("[0-9]{3}-[0-9]{3}-[0-9]{4}")
+
+    if (firstname.value.trim() === "" && lastname.value.trim() === "") {
+        console.log("not valid");
+        return;
+    }
 })
+
+
+
+
 
 // type Contact = {
 //     id: string,
