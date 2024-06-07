@@ -66,3 +66,7 @@ input:focus {
 button i {
     @apply pointer-events-none
 }
+
+.cn {
+    transform: rotate(45deg);
+}
