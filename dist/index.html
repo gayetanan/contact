@@ -6,8 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contact Directory </title>
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-  <script type="module" crossorigin src="/assets/index-dTA3Ns68.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-C50PCDuo.css">
+  <script type="module" crossorigin src="/assets/index-CJT2o7QA.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-DvqS-YIY.css">
 </head>
 
 <body>
@@ -38,7 +38,7 @@
           </form>
 
           <div class="px-2 flex gap-2 mt-4">
-            <button aria-active="true" class="c-btn">Add</button>
+            <button aria-active="true" class="c-btn" data-target="#create-box">Add</button>
             <button class="c-btn">import</button>
           </div>
 
@@ -92,28 +92,38 @@
     </div>
   </section>
 
-  <div class="bg-[rgba(0,0,0,.08)] absolute inset-0 p-4 top flex items-center justify-center">
-    <form action="" class="bg-white rounded-md w-full max-w-xs p-4 relative z-50">
-      <div class="add">
-        <div class="form-control border-gray-900/10  p-2">
-          <input type="text" name="firstname" id="firstname" placeholder="Firstname">
+  <div aria-hidden="true" id="create-box"
+    class="aria-hidden:hidden bg-[rgba(0,0,0,.08)] absolute inset-0 p-4 top flex items-center justify-center">
+    <div class="relative">
+      <button data-target="#create-box"
+        class="cl-btn absolute bg-black inline-flex items-center justify-center w-6 h-6 -top-2 -right-2 text-white rounded-full z-1">
+        <i class='cn text-base bx bx-plus'></i>
+      </button>
+
+      <form id="c-form" class="bg-white rounded-md w-full max-w-xs p-6">
+        test test
+        <div class="add">
+          <div class="form-control border-gray-900/10  p-2">
+            <input type="text" name="firstname" id="firstname" placeholder="Firstname">
+          </div>
+          <div class="form-control border-gray-900/10 p-2">
+            <input type="text" name="lastname" id="lastname" placeholder="Lastname">
+          </div>
+          <div class="form-control border-gray-900/10 p-2">
+            <input type="tel" name="phone" placeholder="phone">
+          </div>
+          <div class="form-control p-2">
+            <select name="category" id="" class="block">
+              <option value="friend">Friend</option>
+              <option value="teammate">Teammate</option>
+              <option value="family">Family</option>
+            </select>
+          </div>
         </div>
-        <div class="form-control border-gray-900/10 p-2">
-          <input type="text" name="lastname" id="lastname" placeholder="Lastname">
-        </div>
-        <div class="form-control border-gray-900/10 p-2">
-          <input type="text" name="lastname" id="lastname" placeholder="phone">
-        </div>
-        <div class="form-control p-2">
-          <select name="" id="" class="block">
-            <option value="friend">Friend</option>
-            <option value="teammate">Teammate</option>
-            <option value="family">Family</option>
-          </select>
-        </div>
-      </div>
-      <button class="button-primary button-full button-xl button mt-4">Add Contact</button>
-    </form>
+        <button class="button-primary button-full button-xl button mt-4">Add Contact</button>
+      </form>
+    </div>
+
   </div>
 </body>
 
