@@ -1,25 +1,19 @@
 [
 {
-    "id":"12345",
-    "firstname":"Gaetan",
-    "lastname":"Emmanuel",
+    "id":"123450",
+    "firstname":"x",
+    "lastname":"tmmanuel",
     "cover":"https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250",
     "category":"family",
-    "phones":{
-        "personnal":"+509 44 26 3331",
-        "company":"+509 43 80 8524"
-    },
-    "email":"gayetan.an@gmail.com"
+    "phone":"+509 44 26 3331"
+    
 },
-{"id":"12345",
-    "firstname":"Gaetan",
-    "lastname":"Emmanuel",
+{"id":"123452",
+    "firstname":"X",
+    "lastname":"emmanuel",
     "cover":"https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250",
     "category":"family",
-    "phones":{
-        "personnal":"+509 44 26 3331",
-        "company":"+509 43 80 8524"
-    },
-    "email":"gayetan.an@gmail.com"
+    "phone":"+509 44 26 3331"
+   
 }
 ]

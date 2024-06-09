@@ -6,8 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contact Directory </title>
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.11/build/css/intlTelInput.css">
 </head>
 
 <body>
@@ -111,18 +109,17 @@
             <input id="phone" type="tel" name="phone">
           </div>
           <div class="form-control p-2">
-            <select name="category" id="" class="block">
+            <select name="category" id="category" class="block">
               <option value="friend">Friend</option>
               <option value="teammate">Teammate</option>
               <option value="family">Family</option>
             </select>
           </div>
         </div>
-        <span class="text-xs text-red-600"> </span>
         <button class="button-primary button-full button-xl button mt-4">Add Contact</button>
+        <span aria-error="false"
+          class="hidden text-xs text-red-600 text-center aria-[error='true']:block mt-4 app__error">Error</span>
       </form>
-
-
     </div>
 
   </div>
