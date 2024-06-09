@@ -3,6 +3,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 * {
     @apply font-poppins;
 }
@@ -70,3 +71,23 @@ button i {
 .cn {
     transform: rotate(45deg);
 }
+
+/* 
+.phone {
+    width: 100%;
+    position: relative;
+
+}
+
+.phone .iti__country-container {
+    width: 100%;
+}
+
+.phone .iti__selected-country {
+    position: absolute;
+    right: 0;
+}
+
+.form-control input[type="tel"] {
+    padding-left: 6px !important;
+} */

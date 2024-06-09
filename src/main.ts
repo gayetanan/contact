@@ -1,9 +1,11 @@
+import INT_INTANCE from "./phone";
 import "./css/style.css";
 const createButton = document.querySelector(".c-btn");
 const closeButton = document.querySelector(".cl-btn");
 const contactForm = document.querySelector("#c-form");
-
 const CONTACTS: Contact[] = [];
+
+
 // Open BOX MODEL FOR CREATING Contact
 const boxToggler = (state: string, trigger: HTMLElement): void => {
   const boxID = trigger.dataset.target!;
@@ -71,16 +73,22 @@ contactForm?.addEventListener("submit", (e) => {
   // Ignoring case there is multiple input with the same name;
   const firstname = fieldsCollection.namedItem("firstname") as HTMLInputElement;
   const lastname = fieldsCollection.namedItem("lastname") as HTMLInputElement;
-  const phone = fieldsCollection.namedItem("phone") as HTMLInputElement;
+  const isValidPhoneNumber = INT_INTANCE.isValidNumber();
+  const phoneNumber = INT_INTANCE.getNumber()
+
   let category = fieldsCollection.namedItem("category") as HTMLInputElement;
   if (firstname.value.trim() === "" && lastname.value.trim() === "") {
-    console.log("");
+    console.log("name is require");
     return;
   };
-  if (phone.value.trim() === "") {
-    console.log("phone number is required");
+  if (!isValidPhoneNumber && phoneNumber === "") {
+    console.log("field is required")
     return;
   };
+  if (!isValidPhoneNumber && phoneNumber !== "") {
+    console.log("please provide a valide number")
+    return;
+  }
   let actualCategory = category.value || "friend";
   const id = new Date().getTime()
 
@@ -89,11 +97,12 @@ contactForm?.addEventListener("submit", (e) => {
     firstname: firstname.value,
     lastname: lastname.value,
     category: actualCategory,
-    phone: phone.value
+    phone: phoneNumber
   };
   CONTACTS.push(newContact);
   addContactToUi(CONTACTS);
-  resetFields([firstname, lastname, phone]);
+  resetFields([firstname, lastname]);
+  console.log(CONTACTS)
 })
 
 
