@@ -142,8 +142,8 @@ contactForm?.addEventListener("submit", (e) => {
       contact.phone = INT_INTANCE.getNumber();
       contact.category = category.value;
     }
+    /// IGNORE CASE CONTACT IS NOT FOUND
 
-    console.log(CONTACTS)
   } else {
     let actualCategory = category.value || "friend";
     const id = new Date().getTime()
