@@ -10,6 +10,7 @@ import contacts from "./data/datas.json"
 closeButton?.addEventListener("click", (e) => {
   const button = <HTMLElement>e.target;
   boxToggler("true", button)
+  resetFields();
 });
 // hander error message
 function setErrorMsg(message: string) {
@@ -36,10 +37,16 @@ function resetFields() {
   INT_INTANCE.setNumber("");
 }
 // Open BOX MODEL FOR CREATING Contact
-const boxToggler = (state: string, trigger: HTMLElement): void => {
+const boxToggler = (showBox: "false" | "true", trigger: HTMLElement, state?: "edit" | null): void => {
   const boxID = trigger.dataset.target!;
   const boxModel = document.querySelector(boxID);
-  boxModel?.setAttribute("aria-hidden", state);
+  if (state) {
+    contactForm?.setAttribute("data-state", state)
+  };
+  if (!state && showBox === "false") {
+    contactForm?.removeAttribute("data-state")
+  }
+  boxModel?.setAttribute("aria-hidden", showBox);
 };
 createButton?.addEventListener("click", (e) => {
   const button = <HTMLElement>e.target;
@@ -51,7 +58,7 @@ createButton?.addEventListener("click", (e) => {
 type Contact = {
   id: string,
   firstname: string,
-  lastname?: string,
+  lastname: string,
   cover?: string
   category: string,
   phone: string
@@ -81,8 +88,8 @@ const contactUIComponent = (contact: Contact): string => {
            </div>
            <div class="grid gap-[2px]">
              <span class="text-base font-bold">${contact.firstname} ${contact.lastname ?? ""}</span>
-             <span aria-${contact.category}
-               class="w-fit text-[10px] py-[2px] px-2 aria-[${contact.category}]:bg-yellow-300 rounded-md">Family</span>
+             <span aria-${contact.category}{
+               class="w-fit text-[10px] py-[2px] px-2 aria-[${contact.category}]:bg-yellow-300 rounded-md">${contact.category.slice(0, 1).toUpperCase()}${contact.category.slice(1)}</span>
            </div>
          </div>
          <div>
@@ -125,18 +132,34 @@ contactForm?.addEventListener("submit", (e) => {
     setErrorMsg(`Invalide number for ${INT_INTANCE.getSelectedCountryData().name}`)
     return;
   }
-  let actualCategory = category.value || "friend";
-  const id = new Date().getTime()
 
-  const newContact: Contact = {
-    id: `@${id}`,
-    firstname: firstname.value,
-    lastname: lastname.value,
-    category: actualCategory,
-    phone: phoneNumber
-  };
-  // add contact to contact store
-  CONTACTS.push(newContact);
+  if (form.dataset.state === "edit") {
+    const id = contactMenu.activeElement.id;
+    const contact = CONTACTS.find((data) => id === data.id);
+    if (contact) {
+      contact.firstname = firstname.value;
+      contact.lastname = lastname.value;
+      contact.phone = INT_INTANCE.getNumber();
+      contact.category = category.value;
+    }
+
+    console.log(CONTACTS)
+  } else {
+    let actualCategory = category.value || "friend";
+    const id = new Date().getTime()
+
+    const newContact: Contact = {
+      id: `@${id}`,
+      firstname: firstname.value,
+      lastname: lastname.value,
+      category: actualCategory,
+      phone: phoneNumber
+    };
+    // add contact to contact store
+    CONTACTS.push(newContact);
+  }
+
+
   // sort array
   // loading contact toUI
   addContactToUi(CONTACTS);
@@ -167,9 +190,11 @@ const contactMenu: ContactMenu = {
 
 
 
-const resetActiveElement = () => {
-  contactMenu.activeElement.id = null
-  contactMenu.activeElement.element = null
+const resetActiveElement = (id?: boolean) => {
+  if (!id) {
+    contactMenu.activeElement.id = null;
+  }
+  contactMenu.activeElement.element = null;
 }
 // Create contact Menu;
 const setContactMenu = (clickedContact: HTMLElement | null | undefined) => {
@@ -199,12 +224,26 @@ const setContactMenu = (clickedContact: HTMLElement | null | undefined) => {
         // reset contact Menu
         resetActiveElement();
       };
+      if (button.dataset.type === "edit") {
+        boxToggler("false", <HTMLElement>createButton, "edit");
+        const id = contactMenu.activeElement.id
+        const contact = CONTACTS.find((contact) => { return contact.id === id })!;
+        const firstname = <HTMLInputElement>document.querySelector("#firstname");
+        const lastname = <HTMLInputElement>document.querySelector("#lastname");
+        const category = <HTMLInputElement>document.querySelector("#category");
+        INT_INTANCE.setNumber(contact?.phone)
+        firstname.value = contact.firstname;
+        lastname.value = contact.lastname;
+        category.value = contact.category;
+        resetActiveElement(true);
+        removeMenu();
+      }
 
     })
   }
 };
 // Remove Contact Menu to UI
-const removeMenu = () => {
+function removeMenu() {
   const menu = <HTMLElement>document.querySelector(".menu");
   menu.remove();
 }
