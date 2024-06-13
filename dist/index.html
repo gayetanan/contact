@@ -6,10 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contact Directory </title>
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.11/build/css/intlTelInput.css">
-  <script type="module" crossorigin src="/assets/index-BGURJ5qJ.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-BbnqPfO4.css">
+  <script type="module" crossorigin src="/assets/index-BpfMq_RB.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-KS7quod9.css">
 </head>
 
 <body>
@@ -101,9 +99,7 @@
         class="cl-btn absolute bg-black inline-flex items-center justify-center w-6 h-6 -top-2 -right-2 text-white rounded-full z-1">
         <i class='cn text-base bx bx-plus'></i>
       </button>
-
       <form id="c-form" class="bg-white rounded-md w-full max-w-xs p-6">
-        test test
         <div class="add">
           <div class="form-control border-gray-900/10  p-2">
             <input type="text" name="firstname" id="firstname" placeholder="Firstname">
@@ -111,11 +107,11 @@
           <div class="form-control border-gray-900/10 p-2">
             <input type="text" name="lastname" id="lastname" placeholder="Lastname">
           </div>
-          <div class="form-control border-gray-900/10 p-2">
-            <input id="phone" type="tel" name="phone" placeholder="phone">
+          <div class="form-control border-gray-900/10 p-2 flex items-center">
+            <input id="phone" type="tel" name="phone">
           </div>
           <div class="form-control p-2">
-            <select name="category" id="" class="block">
+            <select name="category" id="category" class="block">
               <option value="friend">Friend</option>
               <option value="teammate">Teammate</option>
               <option value="family">Family</option>
@@ -123,6 +119,8 @@
           </div>
         </div>
         <button class="button-primary button-full button-xl button mt-4">Add Contact</button>
+        <span aria-error="false"
+          class="hidden text-xs text-red-600 text-center aria-[error='true']:block mt-4 app__error">Error</span>
       </form>
     </div>
 
