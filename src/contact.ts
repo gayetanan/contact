@@ -55,7 +55,7 @@ const OrderedContact = (contacts: Contact[], orderType: "a" | "b") => {
     return 0
   });
 };
-const deleteContact = (contactElement: HTMLElement, id: string) => {
+const deleteContact = (contactElement: HTMLElement, id: string): void => {
 
   CONTACTS.forEach((contact, idx) => {
     if (contact.id === id) {
@@ -65,7 +65,4 @@ const deleteContact = (contactElement: HTMLElement, id: string) => {
   contactElement.remove();
 }
 
-const editContact = () => {
-  console.log("editing")
-}
-export { addContactToUi, CONTACTS, OrderedContact, deleteContact, editContact }
+export { addContactToUi, CONTACTS, OrderedContact, deleteContact }

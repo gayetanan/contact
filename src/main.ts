@@ -1,25 +1,28 @@
 // import INT_INTANCE from "./phone";
 import "./css/style.css";
-// const createButton = document.querySelector(".c-btn");
-// const closeButton = document.querySelector(".cl-btn");
+const createButton = document.querySelector(".c-btn");
+const closeButton = document.querySelector(".cl-btn");
 // const contactForm = document.querySelector("#c-form");
 const ulContact = document.querySelector(".contacts")
 import { addContactToUi, CONTACTS, OrderedContact } from "./contact";
 import { toggleConctactMenu } from "./contactMenu";
+import boxToggler from "./contactForm";
+
+
+createButton?.addEventListener("click", (e) => {
+  const button = <HTMLElement>e.target;
+  boxToggler("false", button)
+});
+
+
+closeButton?.addEventListener("click", (e) => {
+  const button = <HTMLElement>e.target;
+  boxToggler("true", button)
+  // resetFields();
+});
 
 
 
-// createButton?.addEventListener("click", (e) => {
-//   const button = <HTMLElement>e.target;
-//   boxToggler("false", button)
-// });
-
-
-// closeButton?.addEventListener("click", (e) => {
-//   const button = <HTMLElement>e.target;
-//   boxToggler("true", button)
-//   resetFields();
-// });
 // // hander error message
 // function setErrorMsg(message: string) {
 //   const messageElement = <HTMLElement>document.querySelector(".app__error");

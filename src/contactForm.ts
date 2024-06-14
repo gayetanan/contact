@@ -4,9 +4,8 @@ type BoxToggler = "false" | "true";
 type State = "edit" | null;
 
 
-
-const boxToggler = (showBox: BoxToggler, trigger: HTML, state?: State,): void => {
-    const boxID = trigger.dataset.target!;
+const boxToggler = (showBox: BoxToggler, trigger?: HTML, state?: State,): void => {
+    const boxID = trigger?.dataset.target! ?? "#create-box";
     const boxModel = document.querySelector(boxID);
     if (state) {
         contactForm?.setAttribute("data-state", state);
