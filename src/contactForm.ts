@@ -4,16 +4,16 @@ type BoxToggler = "false" | "true";
 type State = "edit" | null;
 
 
-const boxToggler = (showBox: BoxToggler, trigger?: HTML, state?: State,): void => {
+const boxToggler = (hidden: BoxToggler, trigger?: HTML, state?: State): void => {
     const boxID = trigger?.dataset.target! ?? "#create-box";
     const boxModel = document.querySelector(boxID);
     if (state) {
         contactForm?.setAttribute("data-state", state);
     };
-    if (!state && showBox === "false") {
+    if (!state && hidden === "true") {
         contactForm?.removeAttribute("data-state");
     };
-    boxModel?.setAttribute("aria-hidden", showBox);
+    boxModel?.setAttribute("aria-hidden", hidden);
 };
 
 export default boxToggler;

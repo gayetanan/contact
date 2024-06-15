@@ -1,6 +1,5 @@
-import { deleteContact } from "./contact";
+import { CONTACTS, deleteContact } from "./contact";
 import boxToggler from "./contactForm";
-
 const contactForm = document.querySelector("#c-form");
 
 type ContactMenu = {
@@ -56,14 +55,28 @@ const setContactMenuToUi = (clickedContact: HTMLElement) => {
         const element = contactMenu.activeElement.element!;
 
         if (button.dataset.type === "delete") {
-            deleteContact(element, id)
-            resetActiveElement()
+            deleteContact(element, id);
+            resetActiveElement();
             return;
         }
         else {
-            contactForm?.setAttribute("data-state", "edit");
-            boxToggler("false");
-            removeMenu()
+            const id = contactMenu.activeElement.id;
+            const firstname = <HTMLInputElement>document.querySelector("#firstname");
+            const lastname = document.querySelector("#lastname") as HTMLInputElement;
+            const phone = document.querySelector("#phone") as HTMLInputElement;
+            const category = document.querySelector("#category") as HTMLInputElement;
+
+
+            removeMenu();
+            boxToggler("false", undefined, "edit");
+            const contact = CONTACTS.find((contact) => contact.id === id);
+            if (contact) {
+                firstname.value = contact.firstname
+                lastname.value = contact.lastname
+                phone.value = contact.phone
+                category.value = contact.category
+            }
+
         }
 
     })
@@ -95,4 +108,4 @@ const toggleConctactMenu = (contactUiElement: HTMLElement, top: number): void =>
     }
 };
 
-export { contactMenu, toggleConctactMenu }
+export { contactMenu, toggleConctactMenu, resetActiveElement }

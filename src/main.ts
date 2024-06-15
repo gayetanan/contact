@@ -5,11 +5,12 @@ const closeButton = document.querySelector(".cl-btn");
 // const contactForm = document.querySelector("#c-form");
 const ulContact = document.querySelector(".contacts")
 import { addContactToUi, CONTACTS, OrderedContact } from "./contact";
-import { toggleConctactMenu } from "./contactMenu";
+import { contactMenu, resetActiveElement, toggleConctactMenu } from "./contactMenu";
 import boxToggler from "./contactForm";
 
 
 createButton?.addEventListener("click", (e) => {
+
   const button = <HTMLElement>e.target;
   boxToggler("false", button)
 });
@@ -18,6 +19,8 @@ createButton?.addEventListener("click", (e) => {
 closeButton?.addEventListener("click", (e) => {
   const button = <HTMLElement>e.target;
   boxToggler("true", button)
+  resetActiveElement()
+  boxToggler("true", button, null)
   // resetFields();
 });
 
@@ -37,16 +40,16 @@ closeButton?.addEventListener("click", (e) => {
 //     }, 6000)
 //   }
 // }
-// // reset fields
-// function resetFields() {
-//   const firstnameInput = document.querySelector("#firstname") as HTMLInputElement;
-//   const lastnameInput = document.querySelector("#lastname") as HTMLInputElement;
-//   const categoryInput = document.querySelector("#category") as HTMLSelectElement;
-//   firstnameInput.value = '';
-//   lastnameInput.value = '';
-//   categoryInput.value = "friend"
-//   INT_INTANCE.setNumber("");
-// }
+// reset fields
+function resetFields() {
+  const firstnameInput = document.querySelector("#firstname") as HTMLInputElement;
+  const lastnameInput = document.querySelector("#lastname") as HTMLInputElement;
+  const categoryInput = document.querySelector("#category") as HTMLSelectElement;
+  firstnameInput.value = '';
+  lastnameInput.value = '';
+  categoryInput.value = "friend"
+  // INT_INTANCE.setNumber("");
+}
 // // Open BOX MODEL FOR CREATING Contact
 
 
