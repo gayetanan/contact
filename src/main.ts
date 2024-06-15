@@ -1,16 +1,15 @@
-// import INT_INTANCE from "./phone";
+import INT_INTANCE from "./phone";
 import "./css/style.css";
 const createButton = document.querySelector(".c-btn");
 const closeButton = document.querySelector(".cl-btn");
-// const contactForm = document.querySelector("#c-form");
+const contactForm = document.querySelector("#c-form");
 const ulContact = document.querySelector(".contacts")
-import { addContactToUi, CONTACTS, OrderedContact } from "./contact";
+import { addContactToUi, CONTACTS, OrderedContact, Contact } from "./contact";
 import { contactMenu, resetActiveElement, toggleConctactMenu } from "./contactMenu";
 import boxToggler from "./contactForm";
 
 
 createButton?.addEventListener("click", (e) => {
-
   const button = <HTMLElement>e.target;
   boxToggler("false", button)
 });
@@ -18,28 +17,26 @@ createButton?.addEventListener("click", (e) => {
 
 closeButton?.addEventListener("click", (e) => {
   const button = <HTMLElement>e.target;
-  boxToggler("true", button)
-  resetActiveElement()
   boxToggler("true", button, null)
-  // resetFields();
+  resetFields();
 });
 
 
 
-// // hander error message
-// function setErrorMsg(message: string) {
-//   const messageElement = <HTMLElement>document.querySelector(".app__error");
-//   const isVisible = messageElement?.getAttribute("aria-error");
-//   if (isVisible !== "true") {
-//     messageElement?.setAttribute("aria-error", "true");
-//     messageElement.innerHTML = message;
+// hander error message
+function setErrorMsg(message: string) {
+  const messageElement = <HTMLElement>document.querySelector(".app__error");
+  const isVisible = messageElement?.getAttribute("aria-error");
+  if (isVisible !== "true") {
+    messageElement?.setAttribute("aria-error", "true");
+    messageElement.innerHTML = message;
 
-//     setTimeout(() => {
-//       messageElement.innerHTML = ""
-//       messageElement?.setAttribute("aria-error", "false");
-//     }, 6000)
-//   }
-// }
+    setTimeout(() => {
+      messageElement.innerHTML = ""
+      messageElement?.setAttribute("aria-error", "false");
+    }, 6000)
+  }
+}
 // reset fields
 function resetFields() {
   const firstnameInput = document.querySelector("#firstname") as HTMLInputElement;
@@ -50,69 +47,67 @@ function resetFields() {
   categoryInput.value = "friend"
   // INT_INTANCE.setNumber("");
 }
-// // Open BOX MODEL FOR CREATING Contact
 
 
+contactForm?.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const form = <HTMLFormElement>e.target;
+  const fieldsCollection = form.elements;
+  // Ignoring case there is multiple input with the same name;
+  const firstname = fieldsCollection.namedItem("firstname") as HTMLInputElement;
+  const lastname = fieldsCollection.namedItem("lastname") as HTMLInputElement;
+  const isValidPhoneNumber = INT_INTANCE.isValidNumber();
+  const phoneNumber = INT_INTANCE.getNumber()
 
-// contactForm?.addEventListener("submit", (e) => {
-//   e.preventDefault();
-//   const form = <HTMLFormElement>e.target;
-//   const fieldsCollection = form.elements;
-//   // Ignoring case there is multiple input with the same name;
-//   const firstname = fieldsCollection.namedItem("firstname") as HTMLInputElement;
-//   const lastname = fieldsCollection.namedItem("lastname") as HTMLInputElement;
-//   const isValidPhoneNumber = INT_INTANCE.isValidNumber();
-//   const phoneNumber = INT_INTANCE.getNumber()
+  let category = fieldsCollection.namedItem("category") as HTMLInputElement;
+  if (firstname.value.trim() === "" && lastname.value.trim() === "") {
+    setErrorMsg("Please provide a name")
+    return;
+  };
+  if (!isValidPhoneNumber && phoneNumber === "") {
+    setErrorMsg("Phone number is required")
+    return;
+  };
+  if (!isValidPhoneNumber && phoneNumber !== "") {
+    setErrorMsg(`Invalide number for ${INT_INTANCE.getSelectedCountryData().name}`)
+    return;
+  }
 
-//   let category = fieldsCollection.namedItem("category") as HTMLInputElement;
-//   if (firstname.value.trim() === "" && lastname.value.trim() === "") {
-//     setErrorMsg("Please provide a name")
-//     return;
-//   };
-//   if (!isValidPhoneNumber && phoneNumber === "") {
-//     setErrorMsg("Phone number is required")
-//     return;
-//   };
-//   if (!isValidPhoneNumber && phoneNumber !== "") {
-//     setErrorMsg(`Invalide number for ${INT_INTANCE.getSelectedCountryData().name}`)
-//     return;
-//   }
+  if (form.dataset.state === "edit") {
+    const id = contactMenu.activeElement.id;
+    const contact = CONTACTS.find((data) => id === data.id);
+    if (contact) {
+      contact.firstname = firstname.value;
+      contact.lastname = lastname.value;
+      contact.phone = INT_INTANCE.getNumber();
+      contact.category = category.value;
+    }
+    /// IGNORE CASE CONTACT IS NOT FOUND
 
-//   if (form.dataset.state === "edit") {
-//     const id = contactMenu.activeElement.id;
-//     const contact = CONTACTS.find((data) => id === data.id);
-//     if (contact) {
-//       contact.firstname = firstname.value;
-//       contact.lastname = lastname.value;
-//       contact.phone = INT_INTANCE.getNumber();
-//       contact.category = category.value;
-//     }
-//     /// IGNORE CASE CONTACT IS NOT FOUND
+  } else {
+    let actualCategory = category.value || "friend";
+    const id = new Date().getTime()
 
-//   } else {
-//     let actualCategory = category.value || "friend";
-//     const id = new Date().getTime()
-
-//     const newContact: Contact = {
-//       id: `@${id}`,
-//       firstname: firstname.value,
-//       lastname: lastname.value,
-//       category: actualCategory,
-//       phone: phoneNumber
-//     };
-//     // add contact to contact store
-//     CONTACTS.push(newContact);
-//   }
+    const newContact: Contact = {
+      id: `@${id}`,
+      firstname: firstname.value,
+      lastname: lastname.value,
+      category: actualCategory,
+      phone: phoneNumber
+    };
+    // add contact to contact store
+    CONTACTS.push(newContact);
+  }
 
 
-//   // sort array
-//   // loading contact toUI
-//   addContactToUi(CONTACTS);
-//   // reseting all fileds
-//   resetFields();
-//   // close box modle
-//   boxToggler("true", <HTMLElement>closeButton);
-// });
+  // sort array
+  // loading contact toUI
+  addContactToUi(CONTACTS);
+  // reseting all fileds
+  resetFields();
+  // close box modle
+  boxToggler("true", <HTMLElement>closeButton);
+});
 
 
 ulContact?.addEventListener("click", (e) => {

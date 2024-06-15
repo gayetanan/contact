@@ -1,6 +1,5 @@
 import { CONTACTS, deleteContact } from "./contact";
 import boxToggler from "./contactForm";
-const contactForm = document.querySelector("#c-form");
 
 type ContactMenu = {
     position: {
@@ -85,10 +84,14 @@ const setContactMenuToUi = (clickedContact: HTMLElement) => {
 // Toggle Contact Menu to UI
 const toggleConctactMenu = (contactUiElement: HTMLElement, top: number): void => {
 
+    const contactMenuData = (positionTop: number, element: HTMLElement, id: string): void => {
+        contactMenu.position.top = positionTop
+        contactMenu.activeElement.element = element;
+        contactMenu.activeElement.id = id
+    };
+
     if (!contactMenu.activeElement?.element) {
-        contactMenu.position = { top }
-        contactMenu.activeElement.element = contactUiElement;
-        contactMenu.activeElement.id = contactUiElement.dataset.id!
+        contactMenuData(top, contactUiElement, contactUiElement.dataset.id!)
         setContactMenuToUi(contactUiElement);
         return;
 
@@ -100,9 +103,7 @@ const toggleConctactMenu = (contactUiElement: HTMLElement, top: number): void =>
     };
     if (contactMenu.activeElement?.element && contactMenu.activeElement?.element !== contactUiElement) {
         removeMenu();
-        contactMenu.position = { top }
-        contactMenu.activeElement.element = contactUiElement;
-        contactMenu.activeElement.id = contactUiElement.dataset.id!
+        contactMenuData(top, contactUiElement, contactUiElement.dataset.id!)
         setContactMenuToUi(contactUiElement);
         return;
     }

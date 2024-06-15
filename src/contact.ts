@@ -1,15 +1,15 @@
 import contacts from "./data/datas.json"
 
 // contact type
-type Contact = {
+export type Contact = {
   id: string,
   firstname: string,
   lastname: string,
-  cover?: string
   category: string,
+  cover?: string
   phone: string
 }
-const CONTACTS = contacts;
+const CONTACTS: Contact[] = contacts;
 
 
 const contactUIComponent = (contact: Contact): string => {

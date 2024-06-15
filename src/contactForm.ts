@@ -1,3 +1,5 @@
+import { resetActiveElement } from "./contactMenu";
+
 const contactForm = document.querySelector("#c-form");
 type HTML = HTMLElement;
 type BoxToggler = "false" | "true";
@@ -12,6 +14,7 @@ const boxToggler = (hidden: BoxToggler, trigger?: HTML, state?: State): void => 
     };
     if (!state && hidden === "true") {
         contactForm?.removeAttribute("data-state");
+        resetActiveElement()
     };
     boxModel?.setAttribute("aria-hidden", hidden);
 };
