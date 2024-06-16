@@ -4,20 +4,20 @@ const createButton = document.querySelector(".c-btn");
 const closeButton = document.querySelector(".cl-btn");
 const contactForm = document.querySelector("#c-form");
 const ulContact = document.querySelector(".contacts")
-import { addContactToUi, CONTACTS, OrderedContact, Contact } from "./contact";
-import { contactMenu, resetActiveElement, toggleConctactMenu } from "./contactMenu";
+import { addContactToUi, CONTACTS, OrderedContact, Contact, createNewContact } from "./contact";
+import { contactMenu, toggleConctactMenu } from "./contactMenu";
 import boxToggler from "./contactForm";
 
 
 createButton?.addEventListener("click", (e) => {
   const button = <HTMLElement>e.target;
-  boxToggler("false", button)
+  boxToggler("false", undefined, button)
 });
 
 
 closeButton?.addEventListener("click", (e) => {
   const button = <HTMLElement>e.target;
-  boxToggler("true", button, null)
+  boxToggler("true", undefined, button)
   resetFields();
 });
 
@@ -45,7 +45,7 @@ function resetFields() {
   firstnameInput.value = '';
   lastnameInput.value = '';
   categoryInput.value = "friend"
-  // INT_INTANCE.setNumber("");
+  INT_INTANCE.setNumber("");
 }
 
 
@@ -57,7 +57,7 @@ contactForm?.addEventListener("submit", (e) => {
   const firstname = fieldsCollection.namedItem("firstname") as HTMLInputElement;
   const lastname = fieldsCollection.namedItem("lastname") as HTMLInputElement;
   const isValidPhoneNumber = INT_INTANCE.isValidNumber();
-  const phoneNumber = INT_INTANCE.getNumber()
+  const phoneNumber = INT_INTANCE.getNumber();
 
   let category = fieldsCollection.namedItem("category") as HTMLInputElement;
   if (firstname.value.trim() === "" && lastname.value.trim() === "") {
@@ -86,27 +86,15 @@ contactForm?.addEventListener("submit", (e) => {
 
   } else {
     let actualCategory = category.value || "friend";
-    const id = new Date().getTime()
-
-    const newContact: Contact = {
-      id: `@${id}`,
-      firstname: firstname.value,
-      lastname: lastname.value,
-      category: actualCategory,
-      phone: phoneNumber
-    };
-    // add contact to contact store
-    CONTACTS.push(newContact);
+    createNewContact(firstname.value, lastname.value, phoneNumber, actualCategory)
   }
-
-
   // sort array
   // loading contact toUI
   addContactToUi(CONTACTS);
   // reseting all fileds
   resetFields();
   // close box modle
-  boxToggler("true", <HTMLElement>closeButton);
+  boxToggler("true", undefined, <HTMLElement>closeButton);
 });
 
 

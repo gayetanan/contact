@@ -52,8 +52,9 @@ const setContactMenuToUi = (clickedContact: HTMLElement) => {
         const button = e.target as HTMLElement;
         const id = contactMenu.activeElement.id!;
         const element = contactMenu.activeElement.element!;
+        const type = button.dataset.type;
 
-        if (button.dataset.type === "delete") {
+        if (type === "delete") {
             deleteContact(element, id);
             resetActiveElement();
             return;
@@ -67,7 +68,7 @@ const setContactMenuToUi = (clickedContact: HTMLElement) => {
 
 
             removeMenu();
-            boxToggler("false", undefined, "edit");
+            boxToggler("false", "edit");
             const contact = CONTACTS.find((contact) => contact.id === id);
             if (contact) {
                 firstname.value = contact.firstname
@@ -83,7 +84,6 @@ const setContactMenuToUi = (clickedContact: HTMLElement) => {
 
 // Toggle Contact Menu to UI
 const toggleConctactMenu = (contactUiElement: HTMLElement, top: number): void => {
-
     const contactMenuData = (positionTop: number, element: HTMLElement, id: string): void => {
         contactMenu.position.top = positionTop
         contactMenu.activeElement.element = element;

@@ -6,7 +6,7 @@ const URL = `https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.11/build/js/utils.
 const INT_INTANCE = intlTelInput(phoneInput, {
     initialCountry: "auto",
     containerClass: "phone",
-    autoPlaceholder: "polite",
+    autoPlaceholder: "",
     strictMode: true,
     utilsScript: URL,
     formatAsYouType: true,
@@ -20,4 +20,4 @@ const INT_INTANCE = intlTelInput(phoneInput, {
     }
 });
 
-export default INT_INTANCE
+export default INT_INTANCE;

@@ -11,7 +11,6 @@ export type Contact = {
 }
 const CONTACTS: Contact[] = contacts;
 
-
 const contactUIComponent = (contact: Contact): string => {
   return `
     <li class="flex justify-between items-center relative" data-id="${contact.id}">
@@ -41,7 +40,6 @@ const addContactToUi = (contacts: Contact[]): void => {
   });
   contactList.innerHTML = contactData.join(" ");
 };
-
 //order contact data
 const OrderedContact = (contacts: Contact[], orderType: "a" | "b") => {
   if (contacts.length >= 0 && contacts.length < 2) {
@@ -55,6 +53,7 @@ const OrderedContact = (contacts: Contact[], orderType: "a" | "b") => {
     return 0
   });
 };
+// Delete contact by ID
 const deleteContact = (contactElement: HTMLElement, id: string): void => {
 
   CONTACTS.forEach((contact, idx) => {
@@ -62,7 +61,20 @@ const deleteContact = (contactElement: HTMLElement, id: string): void => {
       CONTACTS.splice(idx, 1);
     }
   })
+  // contact element to UI
   contactElement.remove();
 }
-
-export { addContactToUi, CONTACTS, OrderedContact, deleteContact }
+// Push contact to LIST CONTACTS
+const createNewContact = (firstname: string, lastname: string, phone: string, category: string) => {
+  const id = `@${new Date().getTime()}`;
+  const newContact: Contact = {
+    id,
+    firstname,
+    lastname,
+    phone,
+    category
+  }
+  CONTACTS.push(newContact);
+  OrderedContact(CONTACTS, "a")
+}
+export { addContactToUi, CONTACTS, OrderedContact, deleteContact, createNewContact }

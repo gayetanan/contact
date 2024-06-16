@@ -6,7 +6,7 @@ type BoxToggler = "false" | "true";
 type State = "edit" | null;
 
 
-const boxToggler = (hidden: BoxToggler, trigger?: HTML, state?: State): void => {
+const boxToggler = (hidden: BoxToggler, state?: State, trigger?: HTML,): void => {
     const boxID = trigger?.dataset.target! ?? "#create-box";
     const boxModel = document.querySelector(boxID);
     if (state) {
