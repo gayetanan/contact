@@ -1,30 +1,29 @@
-import INT_INTANCE from "./phone";
 import "./css/style.css";
 const createButton = document.querySelector(".c-btn");
 const closeButton = document.querySelector(".cl-btn");
 const contactForm = document.querySelector("#c-form");
 const ulContact = document.querySelector(".contacts")
+
 import { addContactToUi, CONTACTS, OrderedContact, createNewContact } from "./contact";
 import { contactMenu, toggleConctactMenu } from "./contactMenu";
-import boxToggler from "./contactForm";
+import boxToggler, { resetFields } from "./contactForm";
+import INT_INTANCE from "./phone";
 
-
-createButton?.addEventListener("click", (e) => {
-  const button = <HTMLElement>e.target;
-  boxToggler("false", undefined, button)
+// add form
+createButton?.addEventListener("click", (): void => {
+  boxToggler("false", undefined)
 });
 
-
-closeButton?.addEventListener("click", (e) => {
-  const button = <HTMLElement>e.target;
-  boxToggler("true", undefined, button)
+// close the form 
+closeButton?.addEventListener("click", (): void => {
+  boxToggler("true", undefined)
   resetFields();
 });
 
 
 
 // hander error message
-function setErrorMsg(message: string) {
+function setErrorMsg(message: string): void {
   const messageElement = <HTMLElement>document.querySelector(".app__error");
   const isVisible = messageElement?.getAttribute("aria-error");
   if (isVisible !== "true") {
@@ -37,19 +36,9 @@ function setErrorMsg(message: string) {
     }, 6000)
   }
 }
-// reset fields
-function resetFields() {
-  const firstnameInput = document.querySelector("#firstname") as HTMLInputElement;
-  const lastnameInput = document.querySelector("#lastname") as HTMLInputElement;
-  const categoryInput = document.querySelector("#category") as HTMLSelectElement;
-  firstnameInput.value = '';
-  lastnameInput.value = '';
-  categoryInput.value = "friend"
-  INT_INTANCE.setNumber("");
-}
 
 
-contactForm?.addEventListener("submit", (e) => {
+contactForm?.addEventListener("submit", (e): void => {
   e.preventDefault();
   const form = <HTMLFormElement>e.target;
   const fieldsCollection = form.elements;
@@ -58,8 +47,8 @@ contactForm?.addEventListener("submit", (e) => {
   const lastname = fieldsCollection.namedItem("lastname") as HTMLInputElement;
   const isValidPhoneNumber = INT_INTANCE.isValidNumber();
   const phoneNumber = INT_INTANCE.getNumber();
-
   let category = fieldsCollection.namedItem("category") as HTMLInputElement;
+
   if (firstname.value.trim() === "" && lastname.value.trim() === "") {
     setErrorMsg("Please provide a name")
     return;
@@ -73,6 +62,7 @@ contactForm?.addEventListener("submit", (e) => {
     return;
   }
 
+  // update contact
   if (form.dataset.state === "edit") {
     const id = contactMenu.activeElement.id;
     const contact = CONTACTS.find((data) => id === data.id);
@@ -81,20 +71,17 @@ contactForm?.addEventListener("submit", (e) => {
       contact.lastname = lastname.value;
       contact.phone = INT_INTANCE.getNumber();
       contact.category = category.value;
-    }
-    /// IGNORE CASE CONTACT IS NOT FOUND
+    };
 
   } else {
-    let actualCategory = category.value || "friend";
-    createNewContact(firstname.value, lastname.value, phoneNumber, actualCategory)
+    createNewContact(firstname.value, lastname.value, phoneNumber, category.value);
   }
-  // sort array
   // loading contact toUI
   addContactToUi(CONTACTS);
   // reseting all fileds
   resetFields();
-  // close box modle
-  boxToggler("true", undefined, <HTMLElement>closeButton);
+  // close box model
+  boxToggler("true", undefined);
 });
 
 

@@ -6,8 +6,8 @@ export type Contact = {
   firstname: string,
   lastname: string,
   category: string,
-  cover?: string
-  phone: string
+  cover?: string,
+  phone: string,
 }
 const CONTACTS: Contact[] = contacts;
 
@@ -43,7 +43,7 @@ const addContactToUi = (contacts: Contact[]): void => {
 //order contact data
 const OrderedContact = (contacts: Contact[], orderType: "a" | "b") => {
   if (contacts.length >= 0 && contacts.length < 2) {
-    return contacts;
+    return;
   }
   contacts.sort((a, b): number => {
     const f1 = (a.firstname + a.lastname).toLowerCase();
@@ -53,6 +53,7 @@ const OrderedContact = (contacts: Contact[], orderType: "a" | "b") => {
     return 0
   });
 };
+
 // Delete contact by ID
 const deleteContact = (contactElement: HTMLElement, id: string): void => {
 

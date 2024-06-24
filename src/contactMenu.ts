@@ -1,5 +1,7 @@
 import { CONTACTS, deleteContact } from "./contact";
 import boxToggler from "./contactForm";
+import { contactFields } from "./contactForm";
+import INT_INTANCE from "./phone";
 
 type ContactMenu = {
     position: {
@@ -19,6 +21,7 @@ const contactMenu: ContactMenu = {
     }
 }
 
+// reset active element
 const resetActiveElement = (id?: boolean) => {
     if (!id) {
         contactMenu.activeElement.id = null;
@@ -31,7 +34,7 @@ function removeMenu() {
     menu.remove();
 }
 
-const createContactMenuComponent = () => {
+const contactMenuComponent = (): HTMLDivElement => {
     const contactMenuClassList = "menu absolute z-50 bg-white text-sm p-1 grid justify-start gap-2 border-[1px] border-gray-900/10 rounded-md"
     const contactMenuElementCtn = document.createElement("div");
 
@@ -45,15 +48,17 @@ const createContactMenuComponent = () => {
 }
 // Create contact Menu;
 const setContactMenuToUi = (clickedContact: HTMLElement) => {
-    const contactMenuElement = createContactMenuComponent();
+    const contactMenuElement = contactMenuComponent();
     clickedContact.appendChild(contactMenuElement);
 
-    contactMenuElement.addEventListener("click", (e) => {
+    // delete or update functionality
+    contactMenuElement.addEventListener("click", (e): void => {
         const button = e.target as HTMLElement;
         const id = contactMenu.activeElement.id!;
         const element = contactMenu.activeElement.element!;
         const type = button.dataset.type;
 
+        // case for delete
         if (type === "delete") {
             deleteContact(element, id);
             resetActiveElement();
@@ -61,20 +66,14 @@ const setContactMenuToUi = (clickedContact: HTMLElement) => {
         }
         else {
             const id = contactMenu.activeElement.id;
-            const firstname = <HTMLInputElement>document.querySelector("#firstname");
-            const lastname = document.querySelector("#lastname") as HTMLInputElement;
-            const phone = document.querySelector("#phone") as HTMLInputElement;
-            const category = document.querySelector("#category") as HTMLInputElement;
-
-
             removeMenu();
             boxToggler("false", "edit");
             const contact = CONTACTS.find((contact) => contact.id === id);
             if (contact) {
-                firstname.value = contact.firstname
-                lastname.value = contact.lastname
-                phone.value = contact.phone
-                category.value = contact.category
+                contactFields.firstname.value = contact.firstname
+                contactFields.lastname.value = contact.lastname
+                INT_INTANCE.setNumber(contact.phone)
+                contactFields.category.value = contact.category
             }
 
         }
@@ -84,23 +83,30 @@ const setContactMenuToUi = (clickedContact: HTMLElement) => {
 
 // Toggle Contact Menu to UI
 const toggleConctactMenu = (contactUiElement: HTMLElement, top: number): void => {
+    // set cobtact menu datas.
     const contactMenuData = (positionTop: number, element: HTMLElement, id: string): void => {
         contactMenu.position.top = positionTop
         contactMenu.activeElement.element = element;
         contactMenu.activeElement.id = id
     };
 
+    // when there was no active element before
     if (!contactMenu.activeElement?.element) {
-        contactMenuData(top, contactUiElement, contactUiElement.dataset.id!)
+        // add contact menu data
+        contactMenuData(top, contactUiElement, contactUiElement.dataset.id!);
+        // add it to the UI
         setContactMenuToUi(contactUiElement);
         return;
 
     };
+
+    // when there was an active element for the current trigger
     if (contactMenu.activeElement?.element === contactUiElement) {
         resetActiveElement()
         removeMenu();
         return;
     };
+    // when there was an active element but the current trugger belong to another contact item
     if (contactMenu.activeElement?.element && contactMenu.activeElement?.element !== contactUiElement) {
         removeMenu();
         contactMenuData(top, contactUiElement, contactUiElement.dataset.id!)
