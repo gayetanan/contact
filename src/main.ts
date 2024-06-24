@@ -4,7 +4,7 @@ const createButton = document.querySelector(".c-btn");
 const closeButton = document.querySelector(".cl-btn");
 const contactForm = document.querySelector("#c-form");
 const ulContact = document.querySelector(".contacts")
-import { addContactToUi, CONTACTS, OrderedContact, Contact, createNewContact } from "./contact";
+import { addContactToUi, CONTACTS, OrderedContact, createNewContact } from "./contact";
 import { contactMenu, toggleConctactMenu } from "./contactMenu";
 import boxToggler from "./contactForm";
 
