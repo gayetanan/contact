@@ -78,22 +78,27 @@ const createNewContact = (firstname: string, lastname: string, phone: string, ca
   CONTACTS.push(newContact);
   OrderedContact(CONTACTS, "a")
 }
-const filterAndsearchContact = (category?: string, name?: string): Contact[] | null => {
+const filterAndsearchContact = (category: string, search: string): Contact[] => {
+  const searchPattern = search.toLowerCase().trim();
+  if (category === "all" && searchPattern === "") {
+    return CONTACTS;
+  }
+
   const filteredContacts = CONTACTS.filter((contact, idx) => {
-    const fullname = contact.firstname + " " + contact.lastname
-    if (category && name) {
-      return contact.category === category && fullname.indexOf(name) >= 0
+    const fullname = (contact.firstname + " " + contact.lastname).toLowerCase();
+    if (category !== "all" && searchPattern === "") {
+      return contact.category === category;
     }
-    if (category) {
-      return contact.category === category
+    if (category === "all" && searchPattern !== "") {
+      return fullname.indexOf(searchPattern) >= 0;
     }
-    if (name) {
-      return fullname.indexOf(name) >= 0
+    if (category !== "all" && searchPattern !== "") {
+      return contact.category === category && fullname.indexOf(searchPattern) >= 0;
     }
   })
 
   return filteredContacts
 };
 
-console.log(filterAndsearchContact("", "emmx"))
+
 export { addContactToUi, CONTACTS, OrderedContact, deleteContact, createNewContact, filterAndsearchContact }

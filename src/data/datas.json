@@ -1,7 +1,7 @@
 [
 {
     "id":"123450",
-    "firstname":"x",
+    "firstname":"B",
     "lastname":"tmmanuel",
     "cover":"https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250",
     "category":"teammate",
@@ -9,14 +9,14 @@
     
 },
 {"id":"123452",
-    "firstname":"X",
+    "firstname":"A",
     "lastname":"emmanuel",
     "cover":"https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250",
     "category":"friend",
     "phone":"+509 44 26 3331"
    
 },{"id":"123452",
-"firstname":"X",
+"firstname":"C",
 "lastname":"emmanuel",
 "cover":"https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250",
 "category":"family",
