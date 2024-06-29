@@ -20,8 +20,8 @@ const contactUIComponent = (contact: Contact): string => {
            </div>
            <div class="grid gap-[2px]">
              <span class="text-base font-bold">${contact.firstname} ${contact.lastname ?? ""}</span>
-             <span aria-${contact.category}{
-               class="w-fit text-[10px] py-[2px] px-2 aria-[${contact.category}]:bg-yellow-300 rounded-md">${contact.category.slice(0, 1).toUpperCase()}${contact.category.slice(1)}</span>
+             <span aria-${contact.category}
+               class="w-fit text-[10px] py-[2px] px-2">${contact.category.slice(0, 1).toUpperCase()}${contact.category.slice(1)}</span>
            </div>
          </div>
          <div>
@@ -78,4 +78,22 @@ const createNewContact = (firstname: string, lastname: string, phone: string, ca
   CONTACTS.push(newContact);
   OrderedContact(CONTACTS, "a")
 }
-export { addContactToUi, CONTACTS, OrderedContact, deleteContact, createNewContact }
+const filterAndsearchContact = (category?: string, name?: string): Contact[] | null => {
+  const filteredContacts = CONTACTS.filter((contact, idx) => {
+    const fullname = contact.firstname + " " + contact.lastname
+    if (category && name) {
+      return contact.category === category && fullname.indexOf(name) >= 0
+    }
+    if (category) {
+      return contact.category === category
+    }
+    if (name) {
+      return fullname.indexOf(name) >= 0
+    }
+  })
+
+  return filteredContacts
+};
+
+console.log(filterAndsearchContact("", "emmx"))
+export { addContactToUi, CONTACTS, OrderedContact, deleteContact, createNewContact, filterAndsearchContact }

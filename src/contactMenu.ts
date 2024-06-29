@@ -29,7 +29,7 @@ const resetActiveElement = (id?: boolean) => {
     contactMenu.activeElement.element = null;
 }
 // Remove Contact Menu to UI
-function removeMenu() {
+function removeMenu(): void {
     const menu = <HTMLElement>document.querySelector(".menu");
     menu.remove();
 }

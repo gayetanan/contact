@@ -12,8 +12,15 @@
     "firstname":"X",
     "lastname":"emmanuel",
     "cover":"https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250",
-    "category":"family",
+    "category":"friend",
     "phone":"+509 44 26 3331"
    
+},{"id":"123452",
+"firstname":"X",
+"lastname":"emmanuel",
+"cover":"https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250",
+"category":"family",
+"phone":"+509 44 26 3331"
+
 }
 ]
