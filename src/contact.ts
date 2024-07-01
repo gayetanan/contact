@@ -1,4 +1,4 @@
-import contacts from "./data/datas.json"
+import { contactListMessage } from "./main";
 
 // contact type
 export type Contact = {
@@ -9,7 +9,18 @@ export type Contact = {
   cover?: string,
   phone: string,
 }
-const CONTACTS: Contact[] = contacts;
+const api = (): Contact[] | null => {
+  const store = localStorage.getItem("contacts");
+  if (store) {
+    return JSON.parse(store)
+  }
+  return null
+
+}
+const setItemToStore = (contacts: Contact[]) => {
+  localStorage.setItem('contacts', JSON.stringify(contacts))
+}
+let CONTACTS: Contact[] = api() ?? [];
 
 const contactUIComponent = (contact: Contact): string => {
   return `
@@ -56,28 +67,17 @@ const OrderedContact = (contacts: Contact[], orderType: "a" | "b") => {
 
 // Delete contact by ID
 const deleteContact = (contactElement: HTMLElement, id: string): void => {
-
-  CONTACTS.forEach((contact, idx) => {
+  CONTACTS?.forEach((contact, idx) => {
     if (contact.id === id) {
       CONTACTS.splice(idx, 1);
+      setItemToStore(CONTACTS);
     }
   })
   // contact element to UI
   contactElement.remove();
+  contactListMessage("No contact.", CONTACTS)
 }
-// Push contact to LIST CONTACTS
-const createNewContact = (firstname: string, lastname: string, phone: string, category: string) => {
-  const id = `@${new Date().getTime()}`;
-  const newContact: Contact = {
-    id,
-    firstname,
-    lastname,
-    phone,
-    category
-  }
-  CONTACTS.push(newContact);
-  OrderedContact(CONTACTS, "a")
-}
+
 const filterAndsearchContact = (category: string, search: string): Contact[] => {
   const searchPattern = search.toLowerCase().trim();
   if (category === "all" && searchPattern === "") {
@@ -101,4 +101,18 @@ const filterAndsearchContact = (category: string, search: string): Contact[] => 
 };
 
 
-export { addContactToUi, CONTACTS, OrderedContact, deleteContact, createNewContact, filterAndsearchContact }
+// add contact to local storae
+const addContactToStore = (contact: Contact): void => {
+  const store = api();
+  let newContactData = []
+  if (!store) {
+    newContactData.push(contact)
+  } else {
+    newContactData = store
+    newContactData.push(contact);
+    OrderedContact(newContactData, "a");
+  }
+  setItemToStore(newContactData)
+  CONTACTS = newContactData
+};
+export { addContactToUi, CONTACTS, OrderedContact, deleteContact, filterAndsearchContact, addContactToStore }

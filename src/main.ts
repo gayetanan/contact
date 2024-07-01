@@ -6,11 +6,16 @@ const ulContact = document.querySelector(".contacts") as HTMLElement;
 const searchForm = document.querySelector("#search-form");
 const filterTriger = document.querySelector(".filter-trigger")
 
-import { addContactToUi, CONTACTS, OrderedContact, createNewContact, filterAndsearchContact } from "./contact";
+import { addContactToUi, CONTACTS, filterAndsearchContact, Contact, addContactToStore } from "./contact";
 import { contactMenu, toggleConctactMenu } from "./contactMenu";
 import boxToggler, { resetFields } from "./contactForm";
 import INT_INTANCE from "./phone";
 
+export const contactListMessage = (message: string, conatcts: Contact[], callback?: Function) => {
+  if (conatcts.length <= 0)
+    return ulContact.innerHTML = `<div class='mx-auto text-gray-400'>${message}</div>`;
+  if (callback) callback(conatcts)
+}
 // add form
 createButton?.addEventListener("click", (): void => {
   boxToggler("false", undefined)
@@ -83,7 +88,16 @@ contactForm?.addEventListener("submit", (e): void => {
     };
 
   } else {
-    createNewContact(firstname.value, lastname.value, phoneNumber, category.value);
+    const id = `@${new Date().getTime()}`;
+    const newContact: Contact = {
+      id,
+      firstname: firstname.value,
+      lastname: lastname.value,
+      phone: phoneNumber,
+      category: category.value
+    }
+    addContactToStore(newContact)
+    // createNewContact(newContact);
   }
   // loading contact toUI
   addContactToUi(CONTACTS);
@@ -127,24 +141,24 @@ const setParams = (param: string, value: string) => {
   params.set(param, value);
   window.history.replaceState(false, '', url)
 }
-searchForm?.addEventListener("submit", (e) => {
-  e.preventDefault();
+const searchFormValues = (key: string) => {
   const form = searchForm as HTMLFormElement;
   const formdata = new FormData(form);
-  const search = formdata.get("search") as string;
-  setParams("search", search);
+  const value = formdata.get(key) as string;
+  return { value }
+}
+searchForm?.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const { value } = searchFormValues("search")
+  setParams("search", value);
 
   const { params } = getParams();
 
   const category = params.get("category") as string ?? "all";
   const searchPattern = params.get("search") as string ?? "";
   const contacts = filterAndsearchContact(category, searchPattern);
-  if (contacts.length > 0) {
-    addContactToUi(contacts);
-    return
-  } else {
-    ulContact.innerHTML = `<div class='mx-auto text-gray-400'>no contact found</div>`;
-  }
+
+  contactListMessage("no contact found", contacts, () => addContactToUi(contacts))
 });
 
 
@@ -160,17 +174,13 @@ document.querySelectorAll("#category-list label input").forEach((input) => {
     const category = params.get("category") as string ?? "all";
     const searchPattern = params.get("search") as string ?? "";
     const contacts = filterAndsearchContact(category, searchPattern);
+    contactListMessage("No contact found.", contacts, () => addContactToUi(CONTACTS))
 
-    if (contacts.length > 0) {
-      addContactToUi(contacts);
-      return
-    } else {
-      ulContact.innerHTML = `<div class='mx-auto text-gray-400'>no contact found</div>`;
-    }
   })
 })
+
+
 document.addEventListener("DOMContentLoaded", () => {
-  OrderedContact(CONTACTS, "a");
-  addContactToUi(CONTACTS);
+  contactListMessage("No contact.", CONTACTS, () => addContactToUi(CONTACTS))
 });
 
