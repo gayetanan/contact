@@ -26,8 +26,8 @@ closeButton?.addEventListener("click", (): void => {
   boxToggler("true", undefined)
   resetFields();
 });
-filterTriger?.addEventListener("click", (e) => {
-  const btn = e.target as HTMLElement;
+
+const filterMenuToggler = (btn: HTMLElement) => {
   const id: string | undefined = btn.dataset.target;
   const filterList = document.querySelector(`#${id ?? ""}`);
   if (filterList?.classList.contains("hidden")) {
@@ -35,6 +35,11 @@ filterTriger?.addEventListener("click", (e) => {
   } else {
     filterList?.classList.replace("block", "hidden")
   }
+}
+
+filterTriger?.addEventListener("click", (e) => {
+  const btn = e.target as HTMLElement;
+  filterMenuToggler(btn)
 
 })
 // hander error message
@@ -116,20 +121,22 @@ ulContact?.addEventListener("click", (e) => {
   if (trigger.tagName === "BUTTON" && trigger.classList.contains("contact-menu")) {
     toggleConctactMenu(contact, top)
   }
-
 });
 
 const getParams = () => {
   const location = window.location.toString();
   const url = new URL(location)
   const params = url.searchParams;
-  return { params, url }
+  // set dafault params value 
+  const category = params.get("category") as string || "all";
+  const search = params.get("search") as string || null;
+  // expose data
+  return { params, url, StrParams: { category, search } }
 }
 
 const setParams = (param: string, value: string) => {
   const { params, url } = getParams()
-  if (params.has(param)) {
-    // remove params when defautl category is provided 
+  if (params.has(param)) {// remove params when defautl category is provided 
     // or no search
     if (param === "search" && value === "" || param === "category" && value === "all") {
       params.delete(`${param}`);
@@ -141,40 +148,34 @@ const setParams = (param: string, value: string) => {
   params.set(param, value);
   window.history.replaceState(false, '', url)
 }
-const searchFormValues = (key: string) => {
+const updateParams = (key: string) => {
   const form = searchForm as HTMLFormElement;
   const formdata = new FormData(form);
   const value = formdata.get(key) as string;
-  return { value }
-}
+  setParams(key, value);
+};
+
+
 searchForm?.addEventListener("submit", (e) => {
   e.preventDefault();
-  const { value } = searchFormValues("search")
-  setParams("search", value);
-
-  const { params } = getParams();
-
-  const category = params.get("category") as string ?? "all";
-  const searchPattern = params.get("search") as string ?? "";
-  const contacts = filterAndsearchContact(category, searchPattern);
-
+  // Update params with form data value;
+  updateParams("search")
+  const { category, search } = getParams().StrParams;
+  const contacts = filterAndsearchContact(category, search);
   contactListMessage("no contact found", contacts, () => addContactToUi(contacts))
 });
 
 
 
 document.querySelectorAll("#category-list label input").forEach((input) => {
-  input.addEventListener("click", (e) => {
-    const input = e.target as HTMLInputElement
-    const value = input.value as string
+  input.addEventListener("click", () => {
+    // Update params with form data value;
+    updateParams("category")
+    const { category, search } = getParams().StrParams;
 
-    setParams("category", value);
-    const { params } = getParams();
-
-    const category = params.get("category") as string ?? "all";
-    const searchPattern = params.get("search") as string ?? "";
-    const contacts = filterAndsearchContact(category, searchPattern);
-    contactListMessage("No contact found.", contacts, () => addContactToUi(CONTACTS))
+    const contacts = filterAndsearchContact(category, search);
+    filterMenuToggler(filterTriger as HTMLElement)
+    contactListMessage("No contact found.", contacts, () => addContactToUi(contacts))
 
   })
 })

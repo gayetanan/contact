@@ -6,8 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contact Directory </title>
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-  <script type="module" crossorigin src="/assets/index-CAan_tsY.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-CGUrWdzn.css">
+  <script type="module" crossorigin src="/assets/index-B_GFxdRd.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-w7AwbmBG.css">
 </head>
 
 <body>
@@ -19,7 +19,7 @@
         </h1>
         <!-- SEARCH -->
         <div class="border-gray-900/10 border-[1px] mt-10 rounded-md pb-2 relative">
-          <form action="" class="flex justify-between">
+          <form id="search-form" class="flex justify-between">
             <div class="form-control flex-auto inline-flex items-center gap-2 border-gray-900/10 border-b-[1px] py-2">
               <i class='bx bx-search'></i>
               <input type="text" name="search" id="search" placeholder="search contact" class="">
@@ -30,10 +30,26 @@
             </button>
 
             <ul id="category-list"
-              class=" hidden absolute right-0 w-full aria-expanded:block max-w-40 top-12 bg-white p-2 border-gray-900/10 border-[1px] rounded-md">
-              <li data-category="all" class="cursor-pointer text-sm">All</li>
-              <li data-category="family" class="cursor-pointer text-sm">Family</li>
-              <li data-category="team-mate" class="cursor-pointer text-sm">Team Mate</li>
+              class="hidden absolute z-50 right-0 w-full aria-expanded:block max-w-40 top-12 bg-white p-2 border-gray-900/10 border-[1px] rounded-md">
+              <label for="all" class="block cursor-pointer text-sm">
+                <input type="radio" name="category" id="all" value="all" checked>
+                <span class="pointer-events-none">All</span>
+              </label>
+
+              <label for="family" class="block cursor-pointer text-sm">
+                <input type="radio" name="category" id="family" value="family">
+                <span class="pointer-events-none">Family</span>
+              </label>
+
+              <label for="teammate" class="block cursor-pointer text-sm">
+                <input type="radio" name="category" id="teammate" value="teammate">
+                <span class="pointer-events-none">Teammate</span>
+              </label>
+
+              <label for="friend" class="block cursor-pointer text-sm">
+                <input type="radio" name="category" id="friend" value="friend">
+                <span class="pointer-events-none">Friend</span>
+              </label>
             </ul>
           </form>
 
@@ -84,10 +100,10 @@
           </ul>
 
         </div>
-        <div class="flex justify-end gap-4">
+        <!-- <div class="flex justify-end gap-4">
           <button>Prev</button>
           <button>Next</button>
-        </div>
+        </div> -->
       </div>
     </div>
   </section>

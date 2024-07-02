@@ -78,41 +78,39 @@ const deleteContact = (contactElement: HTMLElement, id: string): void => {
   contactListMessage("No contact.", CONTACTS)
 }
 
-const filterAndsearchContact = (category: string, search: string): Contact[] => {
-  const searchPattern = search.toLowerCase().trim();
-  if (category === "all" && searchPattern === "") {
+const filterAndsearchContact = (category: string, search: string | null): Contact[] => {
+  if (category === "all" && !search) {
     return CONTACTS;
   }
 
-  const filteredContacts = CONTACTS.filter((contact, idx) => {
+  const filteredContacts = CONTACTS.filter((contact) => {
     const fullname = (contact.firstname + " " + contact.lastname).toLowerCase();
-    if (category !== "all" && searchPattern === "") {
+    if (category !== "all" && !search) {
       return contact.category === category;
     }
-    if (category === "all" && searchPattern !== "") {
-      return fullname.indexOf(searchPattern) >= 0;
+    if (category === "all" && search) {
+      return fullname.indexOf(search) >= 0;
     }
-    if (category !== "all" && searchPattern !== "") {
-      return contact.category === category && fullname.indexOf(searchPattern) >= 0;
+    if (category !== "all" && search) {
+      return contact.category === category && fullname.indexOf(search) >= 0;
     }
   })
 
   return filteredContacts
 };
 
-
 // add contact to local storae
 const addContactToStore = (contact: Contact): void => {
   const store = api();
-  let newContactData = []
+  let newContactData = [];
   if (!store) {
-    newContactData.push(contact)
+    newContactData.push(contact);
   } else {
     newContactData = store
     newContactData.push(contact);
     OrderedContact(newContactData, "a");
   }
-  setItemToStore(newContactData)
-  CONTACTS = newContactData
+  setItemToStore(newContactData);
+  CONTACTS = newContactData;
 };
 export { addContactToUi, CONTACTS, OrderedContact, deleteContact, filterAndsearchContact, addContactToStore }
